@@ -1,23 +1,24 @@
 package cn.tianyu.weatherapp.bean
 
 import android.content.Context
+import android.widget.TextView
 import android.widget.Toast
-
 class Person(name: String, surname: String = "") : Animal(name) {
 
     var name:String = ""
+        get() = field.toUpperCase()
+
+        set(value){
+            field = "Name:$value"
+        }
 
     init {
         //构造函数可以在这里写
         this.name = name
     }
 
-    /*get() = field.toUpperCase()
-
-    set(value){
-        field = "Name:$value"
-    }*/
 }
+
 
 open class Animal(name: String)
 
@@ -39,3 +40,7 @@ fun practice1(){
     val person = Person("name")
     val name = person.name
 }
+
+public var TextView.text:CharSequence
+    get() = getText()
+    set(v) = setText(v)

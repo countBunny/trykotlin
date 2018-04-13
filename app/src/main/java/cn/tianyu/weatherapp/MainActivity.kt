@@ -1,12 +1,18 @@
 package cn.tianyu.weatherapp
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Toast
-import cn.tianyu.weatherapp.adapter.ForecastListAdapter
+import cn.tianyu.weatherapp.adapter.ForecastListAdapter2
+import cn.tianyu.weatherapp.common.domain.RequestForecastCommand
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.find
+import org.jetbrains.anko.longToast
+import org.jetbrains.anko.uiThread
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,12 +31,30 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         message.text = "Hello Kotlin!"
         niceToast(message = "Hello", length = Toast.LENGTH_LONG)
-        val forecastList = findViewById(R.id.forecast_list) as RecyclerView
+        val forecastList:RecyclerView = find(R.id.forecast_list)
         forecastList.layoutManager = LinearLayoutManager(this)
-        forecastList.adapter = ForecastListAdapter(items)
+//        forecastList.adapter = ForecastListAdapter(forecastList)
+        doAsync {
+//            val url = "http://api.openweathermap.org/data/2.5/weather?id=2172797"
+
+//            Request(url).run()
+            val result = RequestForecastCommand("94040").execute()
+            uiThread {
+                forecastList.adapter = ForecastListAdapter2(result)
+                longToast("Request performed")
+            }
+        }
+        //practice
+        /*val f1 = Forecast(Date(), 27.5f, "shiny day")
+        val f2 = f1.copy(temperature = 30f)
+        val (date, temperature, details) = f1
+        val date1 = f1.component1()
+        val temperature2 = f1.component2()
+        val details2 = f1.component3()*/
+
     }
 
-    fun niceToast(message: String, tag: String = MainActivity::class.java.getSimpleName(),
+    inline fun Context.niceToast(message: String, tag: String =javaClass.simpleName,
                   length: Int = Toast.LENGTH_SHORT) {
         Toast.makeText(this, "[$tag] $message", length).show()
     }
