@@ -5,6 +5,7 @@ buildscript {
         kotlin_version = '1.2.30'
         support_version = '27.0.2'
         anko_version = '0.10.4'
+        picasso_version = '2.71828'
     }
 
     repositories {

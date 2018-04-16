@@ -1,6 +1,7 @@
 package cn.tianyu.weatherapp
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -8,11 +9,9 @@ import android.support.v7.widget.RecyclerView
 import android.widget.Toast
 import cn.tianyu.weatherapp.adapter.ForecastListAdapter2
 import cn.tianyu.weatherapp.common.domain.RequestForecastCommand
+import cn.tianyu.weatherapp.utils.supportsLollipop
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.find
-import org.jetbrains.anko.longToast
-import org.jetbrains.anko.uiThread
+import org.jetbrains.anko.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,9 +37,11 @@ class MainActivity : AppCompatActivity() {
 //            val url = "http://api.openweathermap.org/data/2.5/weather?id=2172797"
 
 //            Request(url).run()
-            val result = RequestForecastCommand("94040").execute()
+            val result = RequestForecastCommand().execute()
             uiThread {
-                forecastList.adapter = ForecastListAdapter2(result)
+                forecastList.adapter = ForecastListAdapter2(result){
+                    toast(it.date)
+                }
                 longToast("Request performed")
             }
         }
@@ -51,7 +52,9 @@ class MainActivity : AppCompatActivity() {
         val date1 = f1.component1()
         val temperature2 = f1.component2()
         val details2 = f1.component3()*/
-
+        supportsLollipop {
+            window.statusBarColor=Color.BLACK
+        }
     }
 
     inline fun Context.niceToast(message: String, tag: String =javaClass.simpleName,

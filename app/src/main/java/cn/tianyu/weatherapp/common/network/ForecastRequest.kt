@@ -3,25 +3,26 @@ package cn.tianyu.weatherapp.common.network
 import android.util.Log
 import cn.tianyu.weatherapp.bean.ForecastResult
 import com.google.gson.Gson
+import org.json.JSONObject
 
-class ForecastRequest(val zipCode: String) {
+class ForecastRequest(val zipCode: String = "beijing") {
 
     companion object {
-        private val APP_ID = "b6907d289e10d714a6e88b30761fae22"
-//http://samples.openweathermap.org/data/2.5/forecast/daily?zip=94040&appid=
+        private val APP_ID = "yiyiqgupvurxe2bf"
+//https://api.seniverse.com/v3/weather/daily.json?key=yiyiqgupvurxe2bf
 
-        private val MOK_DOMAIN = "http://samples.openweathermap.org/data/2.5"
-        private val PROD_DOMAIN = "http://api.openweathermap.org/data/2.5"
+        private val MOK_DOMAIN = "https://api.seniverse.com/v3/"
         private val URL = MOK_DOMAIN +
-                "forecast/daily?mode=json&units=metric&cnt=7"
+                "weather/daily.json?language=zh-Hans&unit=c&start=0&days=5"
 
-        private val COMPLETE_URL = "$URL&APPID=$APP_ID&q="
+        private val COMPLETE_URL = "$URL&key=$APP_ID&location="
 
     }
 
     fun execute():ForecastResult{
         val forecastJsonStr = java.net.URL(COMPLETE_URL + zipCode).readText()
         Log.d(javaClass.simpleName, "$forecastJsonStr")
-        return Gson().fromJson(forecastJsonStr, ForecastResult::class.java)
+        val result = JSONObject(forecastJsonStr).optJSONArray("results").optJSONObject(0)
+        return Gson().fromJson(result.toString(), ForecastResult::class.java)
     }
 }
