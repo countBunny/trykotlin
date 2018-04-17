@@ -5,13 +5,15 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.widget.Toast
 import cn.tianyu.weatherapp.adapter.ForecastListAdapter2
 import cn.tianyu.weatherapp.common.domain.RequestForecastCommand
 import cn.tianyu.weatherapp.utils.supportsLollipop
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.longToast
+import org.jetbrains.anko.toast
+import org.jetbrains.anko.uiThread
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         message.text = "Hello Kotlin!"
         niceToast(message = "Hello", length = Toast.LENGTH_LONG)
-        val forecastList:RecyclerView = find(R.id.forecast_list)
+//        val forecastList:RecyclerView = find(R.id.forecast_list)
         forecastList.layoutManager = LinearLayoutManager(this)
 //        forecastList.adapter = ForecastListAdapter(forecastList)
         doAsync {
