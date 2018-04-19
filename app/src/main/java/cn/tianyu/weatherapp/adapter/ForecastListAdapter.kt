@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import cn.tianyu.weatherapp.R
+import cn.tianyu.weatherapp.common.domain.Forecast
 import cn.tianyu.weatherapp.common.domain.ForecastList
-import cn.tianyu.weatherapp.common.domain.ForecastModel
+import cn.tianyu.weatherapp.utils.convertDate
 import cn.tianyu.weatherapp.utils.ctx
 import kotlinx.android.synthetic.main.item_forecast.view.*
 
@@ -29,7 +30,7 @@ class ForecastListAdapter(val items: List<String>) :
 }
 
 class ForecastListAdapter2(val forecastList: ForecastList,
-                           val itemClick: (ForecastModel) -> Unit) :
+                           val itemClick: (Forecast) -> Unit) :
         RecyclerView.Adapter<ForecastListAdapter2.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.ctx)
@@ -37,12 +38,12 @@ class ForecastListAdapter2(val forecastList: ForecastList,
         return ViewHolder(view, itemClick)
     }
 
-    class ViewHolder(view: View, val itemClick: (ForecastModel) -> Unit) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, val itemClick: (Forecast) -> Unit) : RecyclerView.ViewHolder(view) {
 
-        fun bindForecast(forecast: ForecastModel) {
+        fun bindForecast(forecast: Forecast) {
             with(forecast) {
                 itemView.icon.setImageResource(resId)
-                itemView.date.text = date
+                itemView.date.text = convertDate(date)
                 itemView.description.text = description
                 itemView.maxTemperature.text = "${high.toString()}"
                 itemView.minTemperature.text = "${low.toString()}"
@@ -63,7 +64,7 @@ class ForecastListAdapter2(val forecastList: ForecastList,
 
     interface OnItemClickListener {
 
-        operator fun invoke(forecast: ForecastModel)
+        operator fun invoke(forecast: Forecast)
     }
 
 }

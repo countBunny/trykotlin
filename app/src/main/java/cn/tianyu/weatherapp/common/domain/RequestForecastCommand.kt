@@ -1,11 +1,9 @@
 package cn.tianyu.weatherapp.common.domain
 
-import cn.tianyu.weatherapp.common.network.ForecastRequest
+import cn.tianyu.weatherapp.common.domain.datasource.ForecastProvider
 
-class RequestForecastCommand(val zipCode: String = "beijing") : Command<ForecastList> {
+class RequestForecastCommand(val zipCode: String = "beijing",
+                             private val forecastProvider:ForecastProvider = ForecastProvider()) : Command<ForecastList> {
 
-    override fun execute(): ForecastList {
-        val forecastRequest = ForecastRequest(zipCode)
-        return ForecastDataMapper().convertFromDataModel(forecastRequest.execute())
-    }
+    override fun execute() = forecastProvider.requestByCityName()
 }

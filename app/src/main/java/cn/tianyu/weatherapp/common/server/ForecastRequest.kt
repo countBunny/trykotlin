@@ -1,4 +1,4 @@
-package cn.tianyu.weatherapp.common.network
+package cn.tianyu.weatherapp.common.server
 
 import android.util.Log
 import cn.tianyu.weatherapp.bean.ForecastResult
@@ -15,7 +15,7 @@ class ForecastRequest(val zipCode: String = "beijing") {
         private val URL = MOK_DOMAIN +
                 "weather/daily.json?language=zh-Hans&unit=c&start=0&days=5"
 
-        private val COMPLETE_URL = "$URL&key=$APP_ID&location="
+        private val COMPLETE_URL = "${URL}&key=${APP_ID}&location="
 
     }
 

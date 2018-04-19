@@ -1,6 +1,9 @@
 package cn.tianyu.weatherapp.utils
 
 import android.os.Build
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -8,6 +11,16 @@ inline fun supportsLollipop(code: () -> Unit) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         code()
     }
+}
+
+inline fun convertDateToMillis(pattern:String = "yyyy-MM-dd", date:String):Long{
+    val df = SimpleDateFormat(pattern, Locale.getDefault())
+    return df.parse(date).time
+}
+
+inline fun convertDate(date: Long): String {
+    val df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault())
+    return df.format(date)
 }
 
 private class NotNullSingleValueVar<T>() : ReadWriteProperty<Any?, T> {
