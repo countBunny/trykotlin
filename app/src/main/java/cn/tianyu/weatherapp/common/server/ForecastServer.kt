@@ -1,5 +1,6 @@
 package cn.tianyu.weatherapp.common.server
 
+import android.util.Log
 import cn.tianyu.weatherapp.common.db.ForecastDb
 import cn.tianyu.weatherapp.common.domain.ForecastList
 import cn.tianyu.weatherapp.common.domain.datasource.ForecastDataSource
@@ -10,6 +11,7 @@ class ForecastServer(private val dataMapper: ServerDataMapper = ServerDataMapper
         val result = ForecastRequest(cityName).execute()
         val converted = dataMapper.convertToDomain(cityName, result)
         forecastDb.saveForecast(converted)
+        Log.e("ForecastServer", " current millis = " + date)
         return forecastDb.requestForecastByZipCode(cityName, date)
     }
 

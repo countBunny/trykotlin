@@ -18,5 +18,5 @@ fun SQLiteDatabase.clear(tableName: String) {
     execSQL("delete from $tableName")
 }
 
-fun SelectQueryBuilder.byId(property:String = "_id",id:String) =
+fun SelectQueryBuilder.byId(property:String = "_id",id:Long) =
         whereArgs("$property = {id}", "id" to id)

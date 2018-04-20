@@ -6,12 +6,12 @@ import cn.tianyu.weatherapp.common.domain.ForecastList
 class DbDataMapper {
 
     fun convertFromDomain(forecast: ForecastList) = with(forecast) {
-        val daily = dailyForecast.map { convertDayFromDomain(cityId, it) }
-        CityForecast(cityId, city, country, daily)
+        val daily = dailyForecast.map { convertDayFromDomain(city, it) }
+        CityForecast(city, city, country, daily)
     }
 
     private fun convertDayFromDomain(cityId: String, forecast: Forecast) = with(forecast) {
-        DayForecast(date, description, high, low, resId, cityId)
+        DayForecast(weatherCode, date, description, high, low, resId, cityId)
     }
 
     fun convertToDomain(forecast: CityForecast) = with(forecast) {
@@ -20,6 +20,6 @@ class DbDataMapper {
     }
 
     fun convertDayToDomain(dayForecast: DayForecast)= with(dayForecast) {
-        Forecast(date, description, high, low, iconRes)
+        Forecast(dayCode, date, description, high, low, iconRes)
     }
 }

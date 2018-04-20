@@ -8,8 +8,9 @@ import android.widget.TextView
 import cn.tianyu.weatherapp.R
 import cn.tianyu.weatherapp.common.domain.Forecast
 import cn.tianyu.weatherapp.common.domain.ForecastList
+import cn.tianyu.weatherapp.common.extensions.ctx
 import cn.tianyu.weatherapp.utils.convertDate
-import cn.tianyu.weatherapp.utils.ctx
+import cn.tianyu.weatherapp.utils.getWeatherDrawable
 import kotlinx.android.synthetic.main.item_forecast.view.*
 
 class ForecastListAdapter(val items: List<String>) :
@@ -42,7 +43,7 @@ class ForecastListAdapter2(val forecastList: ForecastList,
 
         fun bindForecast(forecast: Forecast) {
             with(forecast) {
-                itemView.icon.setImageResource(resId)
+                itemView.icon.setImageResource(getWeatherDrawable(weatherCode))
                 itemView.date.text = convertDate(date)
                 itemView.description.text = description
                 itemView.maxTemperature.text = "${high.toString()}"

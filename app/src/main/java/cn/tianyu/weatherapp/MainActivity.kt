@@ -12,6 +12,7 @@ import cn.tianyu.weatherapp.utils.supportsLollipop
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.longToast
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.uiThread
 
 class MainActivity : AppCompatActivity() {
@@ -41,7 +42,8 @@ class MainActivity : AppCompatActivity() {
             val result = RequestForecastCommand().execute()
             uiThread {
                 forecastList.adapter = ForecastListAdapter2(result){
-//                    startActivity<>()
+                    startActivity<DetailActivity>(DetailActivity.ID to it.date.toString(),
+                            DetailActivity.CITY_NAME to result.city)
                 }
                 longToast("Request performed")
             }

@@ -14,6 +14,7 @@ object DayForecastTable{
     val DESCRIPTION = "description"
     val HIGH = "high"
     val LOW = "low"
-    val ICON_URL = "iconUrl"
+    val ICON_URL = "iconRes"
     val CITY_ID = "cityId"
+    val WEATHER_CODE = "dayCode"
 }
