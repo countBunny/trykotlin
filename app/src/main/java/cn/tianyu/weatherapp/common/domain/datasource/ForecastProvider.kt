@@ -10,7 +10,9 @@ class ForecastProvider(private val source: List<ForecastDataSource> = ForecastPr
 
     companion object {
         val DAY_IN_MILLIS = 1000 * 60 * 60 * 24
-        val SOURCE = listOf(ForecastDb(), ForecastServer())
+        val SOURCE by lazy {
+            listOf(ForecastDb(), ForecastServer())
+        }
     }
 
     fun requestByCityName(cityName:String = "Beijing", days:Int = 2): ForecastList = requestToSources{

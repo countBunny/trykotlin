@@ -2,7 +2,7 @@ package cn.tianyu.weatherapp.common.db
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import cn.tianyu.weatherapp.App
+import cn.tianyu.weatherapp.ui.App
 import org.jetbrains.anko.db.*
 
 class ForecastDbHelper(ctx: Context = App.instance) : ManagedSQLiteOpenHelper(ctx, ForecastDbHelper.DB_NAME,

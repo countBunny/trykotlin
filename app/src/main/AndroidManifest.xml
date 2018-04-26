@@ -10,10 +10,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".App"
+        android:name=".ui.App"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:configChanges="screenLayout|keyboardHidden|orientation">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -21,9 +21,22 @@
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
-        <activity android:name=".DetailActivity"
-                  android:configChanges="screenLayout|keyboardHidden|orientation"
-            />
+        <activity
+            android:name=".ui.activity.DetailActivity"
+            android:configChanges="screenLayout|keyboardHidden|orientation"
+            android:parentActivityName=".ui.activity.MainActivity"
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activity.MainActivity"
+                />
+        </activity>
+        <activity
+            android:name=".ui.activity.SettingsActivity"
+            android:configChanges="screenLayout|keyboardHidden|orientation"
+            >
+
+        </activity>
     </application>
 
 </manifest>

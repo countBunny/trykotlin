@@ -1,6 +1,9 @@
 package cn.tianyu.weatherapp.utils
 
+import android.content.Context
 import android.os.Build
+import cn.tianyu.weatherapp.common.extensions.Preferences
+import cn.tianyu.weatherapp.common.extensions.StringPreference
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -13,7 +16,7 @@ inline fun supportsLollipop(code: () -> Unit) {
     }
 }
 
-inline fun convertDateToMillis(pattern:String = "yyyy-MM-dd", date:String):Long{
+inline fun convertDateToMillis(pattern: String = "yyyy-MM-dd", date: String): Long {
     val df = SimpleDateFormat(pattern, Locale.getDefault())
     return df.parse(date).time
 }
@@ -21,6 +24,11 @@ inline fun convertDateToMillis(pattern:String = "yyyy-MM-dd", date:String):Long{
 inline fun convertDate(date: Long): String {
     val df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault())
     return df.format(date)
+}
+
+fun Long.toDateString(dateFormat: Int = DateFormat.MEDIUM): String {
+    val dateFormat = DateFormat.getDateInstance(dateFormat, Locale.getDefault())
+    return dateFormat.format(this)
 }
 
 private class NotNullSingleValueVar<T>() : ReadWriteProperty<Any?, T> {
@@ -39,4 +47,10 @@ private class NotNullSingleValueVar<T>() : ReadWriteProperty<Any?, T> {
 
 object DelegateExt {
     fun <T> notNullSingleValue(): ReadWriteProperty<Any?, T> = NotNullSingleValueVar()
+
+    fun stringPrefs(context: Context, name: String, default: String) =
+            StringPreference(context, name, default)
+
+    fun <T : Any> prefs(context: Context, name: String, default: T) =
+            Preferences(context, name, default)
 }

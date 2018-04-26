@@ -26,12 +26,12 @@ class ForecastDb(private val forecastDbHelper: ForecastDbHelper = ForecastDbHelp
 
         val dailyRequest = "${DayForecastTable.CITY_ID} = {id}  AND ${DayForecastTable.DATE} >= {date}"//${DayForecastTable.CITY_ID} like {id}  AND ${DayForecastTable.DATE} >= {date}
         val dailyForecast = select(DayForecastTable.NAME)
-                .whereArgs(dailyRequest, "id" to "北京",
+                .whereArgs(dailyRequest, "id" to "$cityId",
                         "date" to (date - ForecastProvider.DAY_IN_MILLIS))//"id" to cityId, "date" to date
                 .parseList { DayForecast(HashMap(it)) }
         Log.e("Forecast", "daily=" + dailyForecast)
         val city = select(CityForecastTable.NAME)
-                .whereSimple("${CityForecastTable.CITY} = ?", "北京")
+                .whereSimple("${CityForecastTable.CITY} = ?", "$cityId")
                 .parseOpt {
                     CityForecast(HashMap(it), dailyForecast)
                 }

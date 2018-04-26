@@ -1,21 +1,26 @@
-package cn.tianyu.weatherapp
+package cn.tianyu.weatherapp.ui.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import cn.tianyu.weatherapp.R
 import cn.tianyu.weatherapp.common.domain.Forecast
 import cn.tianyu.weatherapp.common.domain.RequestDayForecastCommand
 import cn.tianyu.weatherapp.common.extensions.color
 import cn.tianyu.weatherapp.common.extensions.textColor
+import cn.tianyu.weatherapp.ui.interfaces.IToolbarManager
 import cn.tianyu.weatherapp.utils.getWeatherDrawable
-import kotlinx.android.synthetic.main.activity_detail.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.find
 import org.jetbrains.anko.uiThread
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity(), IToolbarManager{
+    override val toolbar: Toolbar  by lazy {
+        find<Toolbar>(R.id.toolbar)
+    }
 
     companion object {
         val ID = "DetailActivity:id"
@@ -25,9 +30,11 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-
-        titleDetail.text = intent.getStringExtra(CITY_NAME)
-
+        initToolbar()
+        toolbar.title = intent.getStringExtra(CITY_NAME)
+        enableHomeAsUp {
+            onBackPressed()
+        }
         doAsync {
             val result = RequestDayForecastCommand(intent.getStringExtra(ID)).execute()
             uiThread { bindForecast(result) }
