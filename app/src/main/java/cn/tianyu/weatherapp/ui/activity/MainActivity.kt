@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity(), IToolbarManager{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initToolbar()
         message.text = "Hello Kotlin!"
         niceToast(message = "Hello", length = Toast.LENGTH_LONG)
 //        val forecastList:RecyclerView = find(R.id.forecast_list)
@@ -53,12 +54,12 @@ class MainActivity : AppCompatActivity(), IToolbarManager{
         supportsLollipop {
             window.statusBarColor = Color.BLACK
         }
-        initToolbar()
         toolbar.title = "天气"
     }
 
     override fun onResume() {
         super.onResume()
+        toolbar.title = mCityName
         loadforecast()
     }
 
